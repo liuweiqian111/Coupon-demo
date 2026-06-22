@@ -2,7 +2,7 @@ package com.example.coupondemo.mq;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -10,18 +10,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CouponProducer {
 
-    private final RabbitTemplate rabbitTemplate;
-
-    public static final String EXCHANGE = "coupon.exchange";
-    public static final String ROUTING_KEY = "coupon.routing.key";
-    public static final String QUEUE = "coupon.queue";
+    private final RocketMQTemplate rocketMQTemplate;
+    public static final String TOPIC = "coupon-topic";
 
     public void send(Long activityId, Long userId, String messageId) {
         CouponMessage message = new CouponMessage();
         message.setActivityId(activityId);
         message.setUserId(userId);
         message.setMessageId(messageId);
-        rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, message);
+        rocketMQTemplate.syncSend(TOPIC, message);
         log.info("发送领券消息: activityId={}, userId={}", activityId, userId);
     }
 }

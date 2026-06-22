@@ -5,7 +5,6 @@ spring:
   application:
     name: coupon-demo
 
-  # Thymeleaf 配置
   thymeleaf:
     cache: false
     enabled: true
@@ -14,7 +13,6 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
 
-  # 数据源配置（Druid）
   datasource:
     url: jdbc:mysql://localhost:3306/coupon_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -36,7 +34,6 @@ spring:
       max-pool-prepared-statement-per-connection-size: 20
       filters: stat
 
-  # Redis 配置
   data:
     redis:
       host: 127.0.0.1
@@ -50,29 +47,13 @@ spring:
           min-idle: 100
           max-wait: 500ms
 
-  # RabbitMQ 配置
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: guest
-    password: guest
-    virtual-host: /
-    listener:
-      simple:
-        concurrency: 10
-        max-concurrency: 10
-        prefetch: 1
-        auto-startup: true
-        default-requeue-rejected: true
-    template:
-      retry:
-        enabled: true
-        initial-interval: 1000ms
-        max-attempts: 3
-        max-interval: 10000ms
-        multiplier: 1.0
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: coupon-producer-group
+    send-message-timeout: 3000
+    retry-times-when-send-failed: 2
 
-# MyBatis-Plus 配置
 mybatis-plus:
   type-aliases-package: com.example.coupondemo.domain
   mapper-locations: classpath:mapper/*.xml
@@ -82,7 +63,6 @@ mybatis-plus:
     default-statement-timeout: 3000
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-# 日志配置
 logging:
   level:
     com.example.coupondemo.mapper: debug

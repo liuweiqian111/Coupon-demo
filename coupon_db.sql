@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26)
  File Encoding         : 65001
 
- Date: 22/06/2026 14:55:53
+ Date: 22/06/2026 17:59:14
 */
 
 SET NAMES utf8mb4;
@@ -34,7 +34,7 @@ CREATE TABLE `coupon_activity`  (
   INDEX `idx_time`(`start_time`, `end_time`) USING BTREE,
   INDEX `idx_status`(`status`) USING BTREE,
   INDEX `idx_status_time`(`status`, `start_time`, `end_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '优惠券活动表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '优惠券活动表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of coupon_activity
@@ -56,7 +56,7 @@ CREATE TABLE `message_log`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `message_id`(`message_id`) USING BTREE,
   INDEX `idx_message_id`(`message_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '消息消费日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '消息消费日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of message_log
@@ -77,12 +77,13 @@ CREATE TABLE `user`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `phone`(`phone`) USING BTREE,
   INDEX `idx_phone`(`phone`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES (1, '18712345678', '4e847ba0ccdfa60f2e4cffda15546d04', '测试用户1', '2026-06-21 16:43:45');
+INSERT INTO `user` VALUES (2, '18787654321', '4e847ba0ccdfa60f2e4cffda15546d04', '测试用户2', '2026-06-22 18:00:00');
 
 -- ----------------------------
 -- Table structure for user_coupon
@@ -100,7 +101,7 @@ CREATE TABLE `user_coupon`  (
   UNIQUE INDEX `uk_user_activity`(`user_id`, `activity_id`) USING BTREE,
   INDEX `idx_user_id`(`user_id`) USING BTREE,
   INDEX `idx_activity_id`(`activity_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户领券记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户领券记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user_coupon
