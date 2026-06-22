@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录 - 优惠券领取系统</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            width: 360px;
+        }
+        .login-box h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-login:hover {
+            background: #5a6fd6;
+        }
+        .msg {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #e74c3c;
+            min-height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>优惠券领取系统</h2>
+        <div class="form-group">
+            <label>手机号</label>
+            <input type="text" id="phone" placeholder="请输入手机号" value="18712345678">
+        </div>
+        <div class="form-group">
+            <label>密码</label>
+            <input type="password" id="password" placeholder="请输入密码" value="123456">
+        </div>
+        <button class="btn-login" onclick="doLogin()">登录</button>
+        <div class="msg" id="msg"></div>
+    </div>
+
+    <script>
+        function doLogin() {
+            var phone = document.getElementById('phone').value;
+            var password = document.getElementById('password').value;
+            var msg = document.getElementById('msg');
+
+            fetch('/login/doLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'phone=' + encodeURIComponent(phone) + '&password=' + encodeURIComponent(password)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.code === 200) {
+                    localStorage.setItem('token', data.data);
+                    window.location.href = '/activity/list';
+                } else {
+                    msg.innerText = data.msg;
+                }
+            })
+            .catch(err => {
+                msg.innerText = '网络错误';
+            });
+        }
+    </script>
+</body>
+</html>
